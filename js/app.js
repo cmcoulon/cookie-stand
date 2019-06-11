@@ -26,9 +26,10 @@ for (var i = 0; i < 15; i++) {
 
 var firstAndPikeSales = document.getElementById (firstAndPikeSales);
 var sixAm = document.createElement ('li');
-sixAm.textContent = firstAndPike.cookiesPurchasedArray[0];
+var sixAmText = document.createTextNode ('6AM Sales: ' + firstAndPike.cookiesPurchasedArray[0]);
+sixAm.appendChild(sixAmText);
 firstAndPikeSales.appendChild(sixAm);
-console.log(firstAndPike.cookiesPurchasedArray[0]);
+console.log(firstAndPikeSales[0]);
 
 
 // var message = hour + '00: ' + cookiesPurchasedArray[i] + ' cookies';
