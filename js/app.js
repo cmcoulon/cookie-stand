@@ -3,6 +3,7 @@
 //Global Variables
 var salesByStore = document.getElementById ('salesByStore');
 var locationGlobalArray = [];
+var formQuestions = document.getElementById('formQuestions');
 
 function Locations (name, minCustomers, maxCustomers, avgCookiesPerSale) {
   this.name = name;
@@ -87,6 +88,7 @@ tableHeader();
 //This will be the footer row displaying totals for each hour
 function tableFooter () {
   var locationTrEl = document.createElement ('tr');
+  locationTrEl.id = 'footer';
   var tdEl = document.createElement ('td');
   tdEl.textContent = 'Totals';
   locationTrEl.appendChild(tdEl);
@@ -119,7 +121,6 @@ var seattleCenter = new Locations ('Seattle Center', 11, 38, 3.7);
 var capitalHill = new Locations ('Capital Hill', 20, 38, 2.3);
 var alki = new Locations ('Alki', 2, 16, 4.6);
 
-tableFooter();
 
 /*
 STEPS FOR DOM MANIPULATION:
@@ -127,3 +128,34 @@ STEPS FOR DOM MANIPULATION:
 2. create a new element: document.createElement()
 3. create content for element:
 4. Append back to parent element:  */
+
+var answer = function(event){
+  event.preventDefault();
+
+  // name, minCustomers, maxCustomers, avgCookiesPerSale
+  var name = event.target.name.value;
+  var minCustomers = event.target.minCustomers.value;
+  var maxCustomers = event.target.maxCustomers.value;
+  var avgCookiesPerSale = event.target.avgCookiesPerSale.value;
+
+  // in the event that a user enters anything other than an iteger, this message will display
+  if (minCustomers === isNaN || maxCustomers === isNaN || avgCookiesPerSale === isNaN){
+    alert('please enter whole integers for min hourly customers, max hourly customers, and average cookie sale');
+  } else if (minCustomers > maxCustomers){
+    alert('max customers must be more than min');
+    formQuestions.reset();
+
+  } else {
+    new Locations (name, minCustomers, maxCustomers, avgCookiesPerSale);
+    // select the "footer" row 
+    var destroyFooter = document.getElementById('footer');
+    // select the table element and tell it to delete the footer row so it can be recreated after the new store has been added
+    salesByStore.removeChild(destroyFooter);
+
+    tableFooter();
+  }
+};
+
+formQuestions.addEventListener('submit', answer);
+
+tableFooter();
