@@ -12,12 +12,43 @@
         <ul>
           <li><a href = "/">Home</a></li>
           <li><a href = "/pages/sales.html">Sales</a></li>
+          <li><a href = "/pages/form.html">Form</a></li>
         </ul>
       </nav>
     </header>
     <main>
       <h1>Sales by Store</h1>
       <table id = "salesByStore"></table>
+
+      <form id="formQuestions">
+          <fieldset>
+            <legend>New Store Information</legend>
+  
+            <ul>
+              <li>
+                <label for="name">Name</label>
+                <input name="name" type="text">
+              </li>
+              <li>
+                <label for="minCustomers">Min Hourly Customers</label>
+                <input name="minCustomers" type="number">
+              </li>
+              <li>
+                <label for="maxCustomers">Max Hourly Customers</label>
+                <input name="maxCustomers" type="number">
+              
+              </li>
+              <li>
+                <label for="avgCookiesPerSale">Average Cookie Sale</label>
+                <input name="avgCookiesPerSale" type="number">
+              </li>
+              <li>
+                <input type="submit">
+              </li>
+            </ul>
+  
+          </fieldset>
+        </form>
     </main>
     <footer>
 
