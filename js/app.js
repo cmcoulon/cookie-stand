@@ -134,25 +134,27 @@ var answer = function(event){
 
   // name, minCustomers, maxCustomers, avgCookiesPerSale
   var name = event.target.name.value;
-  var minCustomers = event.target.minCustomers.value;
-  var maxCustomers = event.target.maxCustomers.value;
-  var avgCookiesPerSale = event.target.avgCookiesPerSale.value;
+  var minCustomers = Number(event.target.minCustomers.value);
+  var maxCustomers = Number(event.target.maxCustomers.value);
+  var avgCookiesPerSale = Number(event.target.avgCookiesPerSale.value);
+  console.log(name, minCustomers, maxCustomers, avgCookiesPerSale);
 
   // in the event that a user enters anything other than an iteger, this message will display
   if (minCustomers === isNaN || maxCustomers === isNaN || avgCookiesPerSale === isNaN){
     alert('please enter whole integers for min hourly customers, max hourly customers, and average cookie sale');
-  } else if (minCustomers > maxCustomers){
+  } else if (maxCustomers < minCustomers){
     alert('max customers must be more than min');
     formQuestions.reset();
 
   } else {
     new Locations (name, minCustomers, maxCustomers, avgCookiesPerSale);
-    // select the "footer" row 
+    // select the "footer" row and delete the old one. A new one will be created after this new store row has been added so and new totals tallied.
     var destroyFooter = document.getElementById('footer');
-    // select the table element and tell it to delete the footer row so it can be recreated after the new store has been added
     salesByStore.removeChild(destroyFooter);
 
     tableFooter();
+    console.log(locationGlobalArray[5].cookiesPurchasedArray[0]);
+    formQuestions.reset();
   }
 };
 
