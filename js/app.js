@@ -1,277 +1,125 @@
 'use strict';
 
 //Global Variables
-var locations = document.getElementById ('locations');
+var salesByStore = document.getElementById ('salesByStore');
+var locationGlobalArray = [];
 
-var firstAndPike = {
-  name: '1st and Pike',
-  minCustomers: 23,
-  maxCustomers: 65,
-  avgCookiePerSale: 6.3,
-  cookiesPurchasedArray: [],
-  totals: total,
+function Locations (name, minCustomers, maxCustomers, avgCookiesPerSale) {
+  this.name = name;
+  this.minCustomers = minCustomers;
+  this.maxCustomers = maxCustomers;
+  this.avgCookiesPerSale = avgCookiesPerSale;
+  this.cookiesPurchasedArray = [];
+  this.locationTotal = 0;
+  this.overallTotal = 0;
+  this.fillCookiesPurchasedArray();
+  this.domManipulation();
+  locationGlobalArray.push (this);
 
-  //This will be used to multiply the randomly generated number of customers by the average cookies per sale in order to generate a value for total cookies sold each hour.
-  cookiesPurchasedByHour: function () {
-    var product = this.randomCustomerGenerator() * this.avgCookiePerSale;
-    return Math.round(product); //This is used to round cookies to the nearest whole cookie.  Source: https://www.geeksforgeeks.org/javascript-math-round-function/
-  },
+}
 
-  //This is generating a random number of customers to visit the store each hour
-  randomCustomerGenerator: function () {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers; //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+//This will be used to multiply the randomly generated number of customers by the average cookies per sale in order to generate a value for total cookies sold each hour.
+Locations.prototype.cookiesPurchasedByHour = function () {
+  var product = this.randomCustomerGenerator() * this.avgCookiesPerSale;
+  return Math.round(product); //This is used to round cookies to the nearest whole cookie.  Source: https://www.geeksforgeeks.org/javascript-math-round-function/
+};
+
+//This is generating a random number of customers to visit the store each hour
+Locations.prototype.randomCustomerGenerator = function () {
+  return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers; //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+};
+
+//This method pushes the total cookie sales at this store in an hour to fill an index in the cookiesPurchasedArray.
+Locations.prototype.fillCookiesPurchasedArray = function () {
+  for (var i = 0; i < 15; i++) {
+    var soldCookies = this.cookiesPurchasedByHour();
+    this.locationTotal += soldCookies;
+    this.cookiesPurchasedArray.push (soldCookies);
   }
 };
-//This will be used to calculate the total cookies sold each hour.
-var total = 0;
-for (var i = 0; i < 15; i++) {
-  var soldCookies = firstAndPike.cookiesPurchasedByHour();
-  total += soldCookies;
-  firstAndPike.cookiesPurchasedArray.push (soldCookies);
-  // console.log(soldCookies);
-  // console.log (total);
-}
 
-var locationLiEl = document.createElement ('li');
-var h3El = document.createElement ('h3');
-h3El.textContent = firstAndPike.name;
+//This section sends total cookie sales for this particular store in an hour to be displayed on the page.
+Locations.prototype.domManipulation = function () {
+  var locationTrEl = document.createElement ('tr');
+  var tdEl = document.createElement ('td');
+  tdEl.textContent = this.name;
+  locationTrEl.appendChild (tdEl);
 
-locationLiEl.appendChild(h3El); //This adds an h3 title for the list '1st and Pike'
-
-var ulEl = document.createElement ('ul');
-
-for (var j = 0; j < firstAndPike.cookiesPurchasedArray.length; j++) {
-  var hourSales = document.createElement ('li');
-  var hour = j + 6 + '00: ';
-  hour = hour.padStart (6, '0'); //This is used to display correct military tiume for each li
-  hourSales.textContent = hour + firstAndPike.cookiesPurchasedArray[j] + 'cookies sold.';
-  ulEl.appendChild(hourSales);
-}
-
-//Add the total cookie sales at the end of the list
-hourSales = document.createElement ('li');
-hourSales.textContent = total + ' Total cookie sales.';
-ulEl.appendChild(hourSales);
-
-//Append list items to their parent containers.
-locationLiEl.appendChild(ulEl);
-locations.appendChild(locationLiEl);
-
-var seaTac = {
-  name: 'Seatac Airport',
-  minCustomers: 3,
-  maxCustomers: 24,
-  avgCookiePerSale: 1.2,
-  cookiesPurchasedArray: [],
-  totals: total,
-
-  //This will be used to multiply the randomly generated number of customers by the average cookies per sale in order to generate a value for total cookies sold each hour.
-  cookiesPurchasedByHour: function () {
-    var product = this.randomCustomerGenerator() * this.avgCookiePerSale;
-    return Math.round(product); //This is used to round cookies to the nearest whole cookie.  Source: https://www.geeksforgeeks.org/javascript-math-round-function/
-  },
-
-  //This is generating a random number of customers to visit the store each hour
-  randomCustomerGenerator: function () {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers; //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+  for (var j = 0; j < this.cookiesPurchasedArray.length; j++) {
+    tdEl = document.createElement ('td');
+    tdEl.textContent = this.cookiesPurchasedArray[j];
+    locationTrEl.appendChild(tdEl);
   }
+
+  //Add the total cookie sales at the end of the list
+  tdEl = document.createElement ('td');
+  tdEl.textContent = this.locationTotal;
+  locationTrEl.appendChild(tdEl);
+
+  salesByStore.appendChild(locationTrEl);
 };
-//This will be used to calculate the total cookies sold each hour.
-var total = 0;
-for (var i = 0; i < 15; i++) {
-  var soldCookies = seaTac.cookiesPurchasedByHour();
-  total += soldCookies;
-  seaTac.cookiesPurchasedArray.push (soldCookies);
-  // console.log(soldCookies);
-  // console.log (total);
-}
 
-var locationLiEl = document.createElement ('li');
-var h3El = document.createElement ('h3');
-h3El.textContent = seaTac.name;
+//This function will create the header of the table
+//This is the first cell of the table and will be labled 'location'
+function tableHeader () {
+  var locationTrEl = document.createElement ('tr');
+  var tdEl = document.createElement ('td');
+  tdEl.textContent = 'Location';
+  locationTrEl.appendChild (tdEl);
 
-locationLiEl.appendChild(h3El); //This adds an h3 title for the list '1st and Pike'
-
-var ulEl = document.createElement ('ul');
-
-for (var j = 0; j < seaTac.cookiesPurchasedArray.length; j++) {
-  var hourSales = document.createElement ('li');
-  var hour = j + 6 + '00: ';
-  hour = hour.padStart (6, '0'); //This is used to display correct military tiume for each li
-  hourSales.textContent = hour + seaTac.cookiesPurchasedArray[j] + 'cookies sold.';
-  ulEl.appendChild(hourSales);
-}
-
-//Add the total cookie sales at the end of the list
-hourSales = document.createElement ('li');
-hourSales.textContent = total + ' Total cookie sales.';
-ulEl.appendChild(hourSales);
-
-//Append list items to their parent containers.
-locationLiEl.appendChild(ulEl);
-locations.appendChild(locationLiEl);
-
-var seattleCenter = {
-  name: 'Seattle Center',
-  minCustomers: 11,
-  maxCustomers: 38,
-  avgCookiePerSale: 3.7,
-  cookiesPurchasedArray: [],
-  totals: total,
-
-  //This will be used to multiply the randomly generated number of customers by the average cookies per sale in order to generate a value for total cookies sold each hour.
-  cookiesPurchasedByHour: function () {
-    var product = this.randomCustomerGenerator() * this.avgCookiePerSale;
-    return Math.round(product); //This is used to round cookies to the nearest whole cookie.  Source: https://www.geeksforgeeks.org/javascript-math-round-function/
-  },
-
-  //This is generating a random number of customers to visit the store each hour
-  randomCustomerGenerator: function () {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers; //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+  //this for loop generates the different hours of the day
+  for (var j = 0; j < 15; j++) {
+    var time = document.createElement ('td');
+    var hour = j + 6 + '00';
+    hour = hour.padStart (4, '0'); //This is used to display correct military tiume for each li
+    time.textContent = hour;
+    locationTrEl.appendChild(time);
   }
-};
-//This will be used to calculate the total cookies sold each hour.
-var total = 0;
-for (var i = 0; i < 15; i++) {
-  var soldCookies = seattleCenter.cookiesPurchasedByHour();
-  total += soldCookies;
-  seattleCenter.cookiesPurchasedArray.push (soldCookies);
-  // console.log(soldCookies);
-  // console.log (total);
+  //This will fill the last cell of the first row with the label 'totals'
+  tdEl = document.createElement ('td');
+  tdEl.textContent = 'Total';
+  locationTrEl.appendChild (tdEl);
+
+  salesByStore.appendChild (locationTrEl);
 }
+tableHeader();
 
-var locationLiEl = document.createElement ('li');
-var h3El = document.createElement ('h3');
-h3El.textContent = seattleCenter.name;
+//This will be the footer row displaying totals for each hour
+function tableFooter () {
+  var locationTrEl = document.createElement ('tr');
+  var tdEl = document.createElement ('td');
+  tdEl.textContent = 'Totals';
+  locationTrEl.appendChild(tdEl);
 
-locationLiEl.appendChild(h3El); //This adds an h3 title for the list '1st and Pike'
-
-var ulEl = document.createElement ('ul');
-
-for (var j = 0; j < seattleCenter.cookiesPurchasedArray.length; j++) {
-  var hourSales = document.createElement ('li');
-  var hour = j + 6 + '00: ';
-  hour = hour.padStart (6, '0'); //This is used to display correct military tiume for each li
-  hourSales.textContent = hour + seattleCenter.cookiesPurchasedArray[j] + 'cookies sold.';
-  ulEl.appendChild(hourSales);
-}
-
-//Add the total cookie sales at the end of the list
-hourSales = document.createElement ('li');
-hourSales.textContent = total + ' Total cookie sales.';
-ulEl.appendChild(hourSales);
-
-//Append list items to their parent containers.
-locationLiEl.appendChild(ulEl);
-locations.appendChild(locationLiEl);
-
-var capitalHill = {
-  name: 'Capital Hill',
-  minCustomers: 20,
-  maxCustomers: 38,
-  avgCookiePerSale: 2.3,
-  cookiesPurchasedArray: [],
-  totals: total,
-
-  //This will be used to multiply the randomly generated number of customers by the average cookies per sale in order to generate a value for total cookies sold each hour.
-  cookiesPurchasedByHour: function () {
-    var product = this.randomCustomerGenerator() * this.avgCookiePerSale;
-    return Math.round(product); //This is used to round cookies to the nearest whole cookie.  Source: https://www.geeksforgeeks.org/javascript-math-round-function/
-  },
-
-  //This is generating a random number of customers to visit the store each hour
-  randomCustomerGenerator: function () {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers; //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+  //This section is used to calculate total sales from all shops combined each hour and also add them up as an overall total sales for the day in the last cell.  I was helped with figuring out the logic in this section by my spirit guide Jackie!
+  var overallTotalSales = 0;
+  var hourlyTotalSales = 0;
+  for (var i = 0; i < 15; i++) {
+    overallTotalSales += hourlyTotalSales;
+    hourlyTotalSales = 0;
+    for (var j = 0; j < locationGlobalArray.length; j++) {
+      hourlyTotalSales += locationGlobalArray[j].cookiesPurchasedArray[i];
+    }
+    tdEl = document.createElement ('td');
+    tdEl.textContent = hourlyTotalSales;
+    locationTrEl.appendChild(tdEl);
   }
-};
-//This will be used to calculate the total cookies sold each hour.
-var total = 0;
-for (var i = 0; i < 15; i++) {
-  var soldCookies = capitalHill.cookiesPurchasedByHour();
-  total += soldCookies;
-  capitalHill.cookiesPurchasedArray.push (soldCookies);
-  // console.log(soldCookies);
-  // console.log (total);
+
+  tdEl = document.createElement ('td');
+  tdEl.textContent = overallTotalSales;
+  locationTrEl.appendChild(tdEl);
+
+  salesByStore.appendChild(locationTrEl);
 }
 
-var locationLiEl = document.createElement ('li');
-var h3El = document.createElement ('h3');
-h3El.textContent = capitalHill.name;
+//This section creates objects for each of the locations and sends the provided parameters to the constructor.
+var firstAndPike = new Locations ('1st and Pike', 23, 65, 6.3);
+var seaTac = new Locations ('Seatac Airport', 3, 24, 1.2);
+var seattleCenter = new Locations ('Seattle Center', 11, 38, 3.7);
+var capitalHill = new Locations ('Capital Hill', 20, 38, 2.3);
+var alki = new Locations ('Alki', 2, 16, 4.6);
 
-locationLiEl.appendChild(h3El); //This adds an h3 title for the list '1st and Pike'
-
-var ulEl = document.createElement ('ul');
-
-for (var j = 0; j < capitalHill.cookiesPurchasedArray.length; j++) {
-  var hourSales = document.createElement ('li');
-  var hour = j + 6 + '00: ';
-  hour = hour.padStart (6, '0'); //This is used to display correct military tiume for each li
-  hourSales.textContent = hour + capitalHill.cookiesPurchasedArray[j] + 'cookies sold.';
-  ulEl.appendChild(hourSales);
-}
-
-//Add the total cookie sales at the end of the list
-hourSales = document.createElement ('li');
-hourSales.textContent = total + ' Total cookie sales.';
-ulEl.appendChild(hourSales);
-
-//Append list items to their parent containers.
-locationLiEl.appendChild(ulEl);
-locations.appendChild(locationLiEl);
-
-var alki = {
-  name: 'Alki',
-  minCustomers: 2,
-  maxCustomers: 16,
-  avgCookiePerSale: 4.6,
-  cookiesPurchasedArray: [],
-  totals: total,
-
-  //This will be used to multiply the randomly generated number of customers by the average cookies per sale in order to generate a value for total cookies sold each hour.
-  cookiesPurchasedByHour: function () {
-    var product = this.randomCustomerGenerator() * this.avgCookiePerSale;
-    return Math.round(product); //This is used to round cookies to the nearest whole cookie.  Source: https://www.geeksforgeeks.org/javascript-math-round-function/
-  },
-
-  //This is generating a random number of customers to visit the store each hour
-  randomCustomerGenerator: function () {
-    return Math.floor(Math.random() * (this.maxCustomers - this.minCustomers + 1)) + this.minCustomers; //Source: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-  }
-};
-//This will be used to calculate the total cookies sold each hour.
-var total = 0;
-for (var i = 0; i < 15; i++) {
-  var soldCookies = alki.cookiesPurchasedByHour();
-  total += soldCookies;
-  alki.cookiesPurchasedArray.push (soldCookies);
-  // console.log(soldCookies);
-  // console.log (total);
-}
-
-var locationLiEl = document.createElement ('li');
-var h3El = document.createElement ('h3');
-h3El.textContent = alki.name;
-
-locationLiEl.appendChild(h3El); //This adds an h3 title for the list '1st and Pike'
-
-var ulEl = document.createElement ('ul');
-
-for (var j = 0; j < alki.cookiesPurchasedArray.length; j++) {
-  var hourSales = document.createElement ('li');
-  var hour = j + 6 + '00: ';
-  hour = hour.padStart (6, '0'); //This is used to display correct military tiume for each li
-  hourSales.textContent = hour + alki.cookiesPurchasedArray[j] + 'cookies sold.';
-  ulEl.appendChild(hourSales);
-}
-
-//Add the total cookie sales at the end of the list
-hourSales = document.createElement ('li');
-hourSales.textContent = total + ' Total cookie sales.';
-ulEl.appendChild(hourSales);
-
-//Append list items to their parent containers.
-locationLiEl.appendChild(ulEl);
-locations.appendChild(locationLiEl);
+tableFooter();
 
 /*
 STEPS FOR DOM MANIPULATION:
