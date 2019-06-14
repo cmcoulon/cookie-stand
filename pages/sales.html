@@ -3,55 +3,114 @@
 <html>
   <head>
     <title>Salmon Cookie Stand</title>
+    <link rel = "stylesheet" href = "/css/style.css"/>
   </head>
 
   <body>
-    <header>
-      <h1>Salmon Cookie Stand Sales</h1>
-      <nav>
-        <ul>
-          <li><a href = "/">Home</a></li>
-          <li><a href = "/pages/sales.html">Sales</a></li>
-        </ul>
-      </nav>
-    </header>
-    <main>
-      <h1>Sales by Store</h1>
-      <table id = "salesByStore"></table>
-
-      <form id="formQuestions">
-          <fieldset>
-            <legend>New Store Information</legend>
-  
+      <header>
+          <nav>
             <ul>
-              <li>
-                <label for="name">Name</label>
-                <input name="name" type="text">
-              </li>
-              <li>
-                <label for="minCustomers">Min Hourly Customers</label>
-                <input name="minCustomers" type="number">
-              </li>
-              <li>
-                <label for="maxCustomers">Max Hourly Customers</label>
-                <input name="maxCustomers" type="number">
-              
-              </li>
-              <li>
-                <label for="avgCookiesPerSale">Average Cookie Sale</label>
-                <input name="avgCookiesPerSale" type="number">
-              </li>
-              <li>
-                <input type="submit">
-              </li>
+              <li><img src = "https://raw.githubusercontent.com/codefellows/seattle-201d57/master/class-09/lab-b/assets/frosted-cookie.jpg" alt = "Pat's Salmon Cookie Logo"/></li>
+              <li><a href = "/">Home</a></li>
+              <li><a href = "/pages/sales.html">Sales</a></li>
             </ul>
-  
-          </fieldset>
-        </form>
+            <section id = "salmonLogoFooterSection">
+                <img id = "salmonLogoFooter" src = "https://raw.githubusercontent.com/codefellows/seattle-201d57/master/class-09/lab-b/assets/fish.jpg" alt = "footer salmon logo"/>
+            </section>
+          </nav>
+          
+        </header>
+    <main>
+
+      <aside>
+          <section>
+            <h2>Merchandise</h2>
+            <h3>T-Shirts</h3>
+            <img id = "tShirtMerch" src = "https://raw.githubusercontent.com/codefellows/seattle-201d57/master/class-09/lab-b/assets/shirt.jpg" alt = "t-shirt merchandise">
+            <p>Great looking t-shirt with the cookie stand avatar!</p>
+            <h3>Cookie Cutters</h3>
+            <img id = "cutterMerch" src = "https://raw.githubusercontent.com/codefellows/seattle-201d57/master/class-09/lab-b/assets/cutter.jpeg" alt = "Cookie cutter merchandise"/>
+            <p>You could own the very same mold that shapes our cookies!</p>
+          </section>
+          <section id = "events">
+            <h2>Upcoming Events</h2>
+            <ul>
+              <li><b>Salmon Days</b></li>
+              <li>Aug 1</li>
+              <li><b>Salmon Fair</b></li>
+              <li>Sept 1</li>
+              <li><b>Salmon Hunt</b></li>
+              <li>Oct 1</li>
+              <li><b>Salmon Eat</b></li>
+              <li>Everyday!!!</li>
+            </ul>
+          </section>
+        </aside>
+      <article id = "mainArticleSales">
+        <h1>Sales by Store</h1>
+        <table id = "salesByStore"></table>
+
+        <form id="formQuestions">
+            <fieldset>
+              <legend>New Store Information</legend>
+    
+              <ul>
+                <li>
+                  <label for="name">Name</label>
+                  <input name="name" type="text">
+                </li>
+                <li>
+                  <label for="minCustomers">Min Hourly Customers</label>
+                  <input name="minCustomers" type="number">
+                </li>
+                <li>
+                  <label for="maxCustomers">Max Hourly Customers</label>
+                  <input name="maxCustomers" type="number">
+                
+                </li>
+                <li>
+                  <label for="avgCookiesPerSale">Average Cookie Sale</label>
+                  <input name="avgCookiesPerSale" type="number">
+                </li>
+                <li>
+                  <input type="submit">
+                </li>
+              </ul>
+    
+            </fieldset>
+          </form>
+      </article>
     </main>
     <footer>
-
-    </footer>
+        <section id = "contactDetails">
+          <h3>Contact Us</h3>
+          <ul>
+            <li><b>Phone:</b></li>
+            <li>206-234-3455</li>
+            <li> </li>
+            <li><b>Mailing Address:</b></li>
+            <li>12334 Union St</li>
+            <li>Seattle, WA 98029</li>
+          </ul>
+        </section>
+        <section id = "storeLocations">
+          <h3>Locations</h3>
+          <ul>
+            <li>1st and Pike</li>
+            <li>Seatac Airport</li>
+            <li>Seattle Center</li>
+            <li>Capital Hill</li>
+            <li>Alki</li>
+          </ul>
+        </section>
+        <section id = "storeHours">
+          <h3>Store Hours</h3>
+          <ul>
+            <li>0600 - 2000</li>
+            <li><b>Everyday</b></li>
+          </ul>
+        </section>
+      </footer>
     <script src = "../js/app.js"></script>
   </body>
 </html>
