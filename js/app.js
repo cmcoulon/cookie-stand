@@ -42,7 +42,7 @@ Locations.prototype.fillCookiesPurchasedArray = function () {
 //This section sends total cookie sales for this particular store in an hour to be displayed on the page.
 Locations.prototype.domManipulation = function () {
   var locationTrEl = document.createElement ('tr');
-  var tdEl = document.createElement ('td');
+  var tdEl = document.createElement ('th');
   tdEl.textContent = this.name;
   locationTrEl.appendChild (tdEl);
 
@@ -64,20 +64,20 @@ Locations.prototype.domManipulation = function () {
 //This is the first cell of the table and will be labled 'location'
 function tableHeader () {
   var locationTrEl = document.createElement ('tr');
-  var tdEl = document.createElement ('td');
+  var tdEl = document.createElement ('th');
   tdEl.textContent = 'Location';
   locationTrEl.appendChild (tdEl);
 
   //this for loop generates the different hours of the day
   for (var j = 0; j < 15; j++) {
-    var time = document.createElement ('td');
+    var time = document.createElement ('th');
     var hour = j + 6 + '00';
     hour = hour.padStart (4, '0'); //This is used to display correct military tiume for each li
     time.textContent = hour;
     locationTrEl.appendChild(time);
   }
   //This will fill the last cell of the first row with the label 'totals'
-  tdEl = document.createElement ('td');
+  tdEl = document.createElement ('th');
   tdEl.textContent = 'Total';
   locationTrEl.appendChild (tdEl);
 
@@ -89,7 +89,7 @@ tableHeader();
 function tableFooter () {
   var locationTrEl = document.createElement ('tr');
   locationTrEl.id = 'footer';
-  var tdEl = document.createElement ('td');
+  var tdEl = document.createElement ('th');
   tdEl.textContent = 'Totals';
   locationTrEl.appendChild(tdEl);
 
